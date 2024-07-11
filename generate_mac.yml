@@ -1,0 +1,10 @@
+---
+- name: Generate MAC Address
+  hosts: localhost
+  connection: local
+  tasks:
+
+    - name: Generate random MAC that is idempotent
+      ansible.builtin.debug:
+        msg: "{{ '52:54:00' | community.general.random_mac(seed='inventory_hostname') }}"
+...

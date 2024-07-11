@@ -1,0 +1,11 @@
+---
+- name: Human readable memory info
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+
+    - name: Display memory in GB
+      ansible.builtin.debug:
+        msg: "{{ 1073741824 | ansible.builtin.human_readable }}"
+...

@@ -1,0 +1,13 @@
+---
+- name: Test wait_for
+  hosts: localhost
+  connection: local
+  tasks:
+
+    - name: Check if port is open
+      ansible.builtin.wait_for:
+        host: localhost
+        port: 8080
+        delay: 5
+        timeout: 30
+...

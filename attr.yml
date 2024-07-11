@@ -1,0 +1,12 @@
+---
+- name: Test your filters
+  hosts: localhost
+  connection: local
+  vars:
+    path: /var/lib/cache
+  tasks:
+
+    - name: For a given path show the filesystem it is mounted under
+      ansible.builtin.debug:
+        msg: "{{ (ansible_facts.mounts | selectattr('mount', 'in', path) | list | sort(attribute='mount'))[-1]['mount'] }}"
+...

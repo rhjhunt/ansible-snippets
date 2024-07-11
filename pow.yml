@@ -1,0 +1,11 @@
+---
+- name: Power of a number
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+
+    - name: Generate power of number
+      ansible.builtin.debug:
+        msg: "{{ 2 | pow(3) }}"
+...

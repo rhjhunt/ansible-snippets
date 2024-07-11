@@ -1,0 +1,11 @@
+---
+- name: File glob
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+
+    - name: Get the file glob
+      ansible.builtin.debug:
+        msg: "{{ '/etc/nfs*' | fileglob }}"
+...

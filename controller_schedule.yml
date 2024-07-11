@@ -1,0 +1,23 @@
+---
+- name: Modify existing schedules
+  hosts: localhost
+  connection: local
+  vars:
+    controller_host: '{{ lookup("env", "CONTROLLER_HOST") }}'
+    controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") | default(omit) }}'
+    controller_oauthtoken: '{{ lookup("env", "CONTROLLER_OAUTH_TOKEN") | default(omit) }}'
+    controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") | default(omit) }}'
+    controller_verify_ssl: '{{ lookup("env", "CONTROLLER_VERIFY_SSL") | default(false) }}'
+    hours: 2
+  tasks:
+
+    - name: Get current date
+      ansible.builtin.set_fact:
+        current_date: "{{ ansible_date_time.date }}"
+
+    - name: Build a list of schedules during outage
+      ansible.builtin.set_fact:
+        _schedules: "{{ query('ansible.controller.controller_api', 'schedules',
+                        query_params={'next_run__lte': end_outage}, return_all=true)
+                        | map(attribute='name') | list }}"
+...

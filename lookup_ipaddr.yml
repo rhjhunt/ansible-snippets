@@ -1,0 +1,10 @@
+---
+- name: Get IP addresses from a file
+  hosts: localhost
+  connection: local
+  tasks:
+
+    - name: Get the IP address when given the hostname
+      ansible.builtin.debug:
+        msg: "{{ lookup('community.general.dig', 'redhat.com.') }}"
+...

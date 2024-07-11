@@ -1,0 +1,20 @@
+---
+- name: Get the amount of hosts
+  hosts: localhost
+  connection: local
+  vars:
+    aap_host: aap.example.com
+    aap_user: admin
+    aap_token:
+    inventory_id: 1
+  tasks:
+
+    - name: Set the amount of hosts from an inventory as a fact
+      ansible.builtin.set_fact:
+        inventory_hosts: "{{ query('ansible.controller.controller_api', 'inventories/{{ inventory_id }}',
+                            host=aap_host, user=aap_user, oauth_token=aap_token) | map(attribute='total_hosts') }}"
+
+    - name: Display the amount of hosts in an inventory
+      ansible.builtin.debug:
+        msg: "{{ inventory_hosts }}"
+...

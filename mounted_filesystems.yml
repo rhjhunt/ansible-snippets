@@ -1,0 +1,10 @@
+---
+- name: Get all mounted filesystems
+  hosts: localhost
+  connection: local
+  tasks:
+
+    - name: Display a list of the mount points
+      ansible.builtin.debug:
+        msg: "{{ ansible_mounts | map(attribute='mount') | list }}"
+...

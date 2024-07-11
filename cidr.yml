@@ -1,0 +1,11 @@
+---
+- name: Get CIDR
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  tasks:
+
+    - name: Show the CIDR output of an IP address
+      ansible.builtin.debug:
+        msg: "{{ ansible_default_ipv4.address | ansible.utils.ipaddr('host') }}"
+...

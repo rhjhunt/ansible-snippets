@@ -1,0 +1,12 @@
+---
+- name: Test path
+  hosts: all
+  connection: local
+  vars:
+    filepath: /usr/local/share
+  tasks:
+
+    - name: Display the toplevel path to the provided filepath
+      ansible.builtin.debug:
+        msg: "{{ filepath | dirname }}"
+...

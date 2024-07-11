@@ -1,0 +1,10 @@
+---
+- name: Uses ansible_date_time fact to retrieve epoch
+  hosts: localhost
+  connection: local
+  tasks:
+
+    - name: Ansible fact - ansible_date_time.epoch
+      ansible.builtin.debug:
+        msg: "epoch: {{ ansible_date_time.epoch }}"
+...

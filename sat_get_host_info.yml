@@ -1,0 +1,18 @@
+---
+- name: Get host information
+  hosts: localhost
+  connection: local
+  tasks:
+
+    - name: Get information from a Red Hat Satellite host
+      redhat.satellite.host_info:
+        username: "admin"
+        password: "changeme"
+        server_url: "https://satellite.example.com"
+        name: server.example.com
+      register: host_info
+
+    - name: Display host information
+      ansible.builtin.debug:
+        msg: "{{ host_info }}"
+...

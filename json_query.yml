@@ -1,0 +1,18 @@
+---
+- name: Get Red Hat lifecycle information
+  hosts: localhost
+  connection: local
+  tasks:
+
+    - name: Gather all Red Hat lifecycle information and store it as JSON
+      ansible.builtin.uri:
+        url: https://access.redhat.com/product-life-cycles/api/v1/plccapi/lifecycle.json?all_versions=true
+        return_content: true
+      register: lifecycle
+
+    - name: Display the lifecycle for the specified product
+      ansible.builtin.debug:
+        msg: "{{ lifecycle.json | community.general.json_query(jmesquery) }}"
+      vars:
+        jmesquery: "[?name=='Red Hat Ansible Automation Platform'].lifecycle"
+...

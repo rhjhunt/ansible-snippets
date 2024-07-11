@@ -1,0 +1,20 @@
+---
+- name: Register command output
+  hosts: localhost
+  connection: local
+  tasks:
+
+    - name: Capture the output of 'ip route'
+      ansible.builtin.command: ip route
+      register: ip_route
+      ignore_errors: true
+      changed_when: false
+
+    - name: Save the output as a new fact
+      ansible.builtin.set_fact:
+        route: "{{ ip_route.stdout_lines }}"
+
+    - name: Display the output of the new fact
+      ansible.builtin.debug:
+        msg: "{{ route }}"
+...

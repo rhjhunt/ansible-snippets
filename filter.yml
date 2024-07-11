@@ -1,0 +1,26 @@
+---
+- name: Test your filters
+  hosts: localhost
+  connection: local
+  vars:
+    systems:
+      one:
+        property: 'prop1'
+        hostname: 'host1'
+      two:
+        property: 'prop2'
+      three:
+        property: 'prop3'
+        hostname: 'host3'
+  tasks:
+
+    - name: Set all systems that have the value hostname defined as a new fact
+      ansible.builtin.set_fact:
+        hostnames: "{{ item }}"
+      loop:
+        - "{{ systems | map('extract', systems) | flatten | selectattr('hostname', 'defined') | list }}"
+
+    - name: Show the output of the hostnames fact
+      ansible.builtin.debug:
+        var: hostnames
+...

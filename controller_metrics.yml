@@ -1,0 +1,19 @@
+---
+- name: Check AAP controller metrics
+  hosts: localhost
+  connection: local
+  vars:
+    controller_host: aap.example.com
+    controller_user: admin
+    controller_oauth_token:
+  tasks:
+
+    - name: Get the status from the API call
+      ansible.builtin.set_fact:
+        controller_metrics: "{{ lookup('ansible.controller.controller_api', 'metrics/?format=json', host=controller_host,
+                              username=controller_user, oauth_token=controller_oauth_token, verify_ssl=false) }}"
+
+    - name: Display AAP controller API endpoint contents
+      ansible.builtin.debug:
+        msg: "{{ controller_metrics }}"
+...

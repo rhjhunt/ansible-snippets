@@ -1,0 +1,12 @@
+---
+- name: Read a file
+  hosts: localhost
+  connection: local
+  vars:
+    file_to_read: "{{ lookup('ansible.builtin.file', '/etc/os-release') }}"
+  tasks:
+
+    - name: Post the output of the file that was read
+      ansible.builtin.debug:
+        msg: "{{ file_to_read }}"
+...

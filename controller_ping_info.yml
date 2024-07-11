@@ -1,0 +1,30 @@
+---
+- name: Check AAP controller health
+  hosts: localhost
+  connection: local
+  vars:
+    hostname: '{{ lookup("env", "CONTROLLER_HOST") }}'
+    username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
+    token: '{{ lookup("env", "CONTROLLER_OAUTH_TOKEN") | default(omit) }}'
+    password: '{{ lookup("env", "CONTROLLER_PASSWORD") | default(omit) }}'
+    verify: '{{ lookup("env", "CONTROLLER_VERIFY_SSL") }}'
+  tasks:
+
+    - name: Gather information from controller with OAuth token authentication
+      ansible.builtin.set_fact:
+        controller_ping: "{{ lookup('ansible.controller.controller_api', 'ping', host=hostname,
+                            username=username, oauth_token=token, password=password, verify_ssl=verify) }}"
+
+    - name: Gather the settings from API call
+      ansible.builtin.set_fact:
+        controller_settings: "{{ lookup('ansible.controller.controller_api', 'settings/all', host=hostname,
+                                username=username, oauth_token=token) }}"
+
+    - name: Display the ping status from API endpoint
+      ansible.builtin.debug:
+        msg: "{{ controller_ping }}"
+
+    - name: Display the settings from the API endpoint
+      ansible.builtin.debug:
+        msg: "{{ controller_settings }}"
+...

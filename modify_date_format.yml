@@ -1,0 +1,16 @@
+---
+- name: Get all mounted filesystems
+  hosts: localhost
+  connection: local
+  vars:
+    days: 90
+  tasks:
+
+    - name: Show ansible date time
+      ansible.builtin.debug:
+        msg: "{{ ansible_date_time.date }}"
+
+    - name: Format the date
+      ansible.builtin.debug:
+        msg: "{{ ansible_date_time.date | to_datetime('%Y-%m-%d') }}"
+...

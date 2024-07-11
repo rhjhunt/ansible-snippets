@@ -1,0 +1,16 @@
+---
+- name: Show a date in the past
+  hosts: localhost
+  connection: local
+  vars:
+    days: 2
+  tasks:
+
+    - name: Get past date
+      ansible.builtin.set_fact:
+        past_date: "{{ '%Y-%m-%d' | strftime(ansible_date_time.epoch | int - (86400 * days)) }}"
+
+    - name: Display past date
+      ansible.builtin.debug:
+        var: past_date
+...

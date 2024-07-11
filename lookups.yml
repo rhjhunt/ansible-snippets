@@ -1,0 +1,27 @@
+---
+- name: Example Lookups
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+
+    - name: Generate pet names
+      ansible.builtin.debug:
+        var: lookup('community.general.random_pet', words=4)
+
+    - name: Generate random password
+      ansible.builtin.debug:
+        var: lookup('password', '/dev/null', chars=['ascii_letters', 'digits'], length=12)
+
+    - name: Get IP from hostname
+      ansible.builtin.debug:
+        var: lookup('community.general.dig', 'registry.redhat.io')
+
+    - name: Read a file
+      ansible.builtin.debug:
+        var: lookup('file', 'inventory')
+
+    - name: Lookup an environment variable
+      ansible.builtin.debug:
+        var: lookup('env', 'SHELL')
+...

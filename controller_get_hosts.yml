@@ -1,0 +1,24 @@
+---
+- name: Get hosts from AAP Controller
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    controller_host: '{{ lookup("env", "CONTROLLER_HOST") }}'
+    controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
+    controller_oauth_token: '{{ lookup("env", "CONTROLLER_OAUTH_TOKEN") | default(omit) }}'
+    controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") | default(omit) }}'
+    controller_verify_ssl: '{{ lookup("env", "CONTROLLER_VERIFY_SSL") }}'
+
+  tasks:
+
+    - name: Generate host list
+      ansible.builtin.set_fact:
+        host_list: "{{ lookup('ansible.controller.controller_api', 'hosts', host=controller_host,
+                      username=controller_username, password=controller_password, oauth_token=controller_oauth_token,
+                      verfiy_ssl=controller_verify_ssl) | map(attribute='name') | list }}"
+
+    - name: Show host list
+      ansible.builtin.debug:
+        msg: "Your host list is {{ host_list }}"
+...

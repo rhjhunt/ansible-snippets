@@ -1,0 +1,28 @@
+---
+- name: Install a python virtual environment
+  hosts: localhost
+  connection: local
+  tasks:
+
+    - name: Create the local environment and install latest version of ansible
+      ansible.builtin.pip:
+        virtualenv: "{{ ansible_user_dir }}/venvs/ansible-latest"
+        virtualenv_command: python3 -m venv
+        state: present
+        name:
+          - ansible
+          - psutil
+          - ansible-lint
+          - yamllint
+
+    - name: Create the local environment and install ansible version 2.9.10
+      ansible.builtin.pip:
+        virtualenv: "{{ ansible_user_dir }}/venvs/ansible-2.9.10"
+        virtualenv_command: python3 -m venv
+        state: present
+        name:
+          - ansible==2.9.10
+          - psutil
+          - ansible-lint
+          - yamllint
+...

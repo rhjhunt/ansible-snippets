@@ -1,0 +1,18 @@
+---
+- name: Gather information from Red Hat Satellite hosts
+  hosts: localhost
+  connection: local
+  tasks:
+
+    - name: Gather host information
+      redhat.satellite.host_info:
+        username: "admin"
+        password: "changeme"
+        server_url: "https://satellite.example.com"
+        search: 'last_checkin > "30 days ago"'
+      register: host_info
+
+    - name: List the hosts that have been offline greater than 30 days
+      ansible.builtin.debug:
+        msg: "{{ host_info | community.general.json_query('hosts[*].name') }}"
+...

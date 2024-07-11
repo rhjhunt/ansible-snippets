@@ -1,0 +1,22 @@
+---
+- name: Show the variable data type
+  hosts: localhost
+  connection: local
+  vars:
+    region:
+      - northwest
+      - southwest
+      - central
+    accounts:
+      bigbank: 1342334
+      uplay: 4564224
+  tasks:
+
+    - name: Display data type of variable region
+      ansible.builtin.debug:
+        msg: "{{ region | type_debug }}"
+
+    - name: Display data type of variable accounts
+      ansible.builtin.debug:
+        msg: "{{ accounts | type_debug }}"
+...
