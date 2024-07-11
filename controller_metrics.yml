@@ -3,9 +3,11 @@
   hosts: localhost
   connection: local
   vars:
-    controller_host: aap.example.com
-    controller_user: admin
-    controller_oauth_token:
+    controller_host: '{{ lookup("env", "CONTROLLER_HOST") }}'
+    controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
+    controller_oauth_token: '{{ lookup("env", "CONTROLLER_OAUTH_TOKEN") | default(omit) }}'
+    controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") | default(omit) }}'
+    controller_verify_ssl: '{{ lookup("env", "CONTROLLER_VERIFY_SSL") }}'
   tasks:
 
     - name: Get the status from the API call

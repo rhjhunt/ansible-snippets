@@ -8,5 +8,5 @@
 
     - name: Post the output of the file that was read
       ansible.builtin.debug:
-        msg: "{{ file_to_read }}"
+        var: file_to_read
 ...

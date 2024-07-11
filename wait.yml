@@ -2,12 +2,13 @@
 - name: Test wait_for
   hosts: localhost
   connection: local
+  gather_facts: false
   tasks:
 
     - name: Check if port is open
       ansible.builtin.wait_for:
         host: localhost
-        port: 8080
+        port: 22
         delay: 5
         timeout: 30
 ...
